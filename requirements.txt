@@ -1,0 +1,2 @@
+torch
+streamlit  # If it's not already installed, add it as well
