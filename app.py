@@ -114,12 +114,9 @@ X, Y, stoi, itos = generate_word_prediction_dataset(sherlock_text, block_size=5,
 # print(len(vocabulary))
 
 def generate_word(model, itos, stoi, block_size,seed_text=None, max_len=10):
-    context = [0] * block_size
-    if seed_text:
-        words = re.findall(r'\w+|[^\w\s]', seed_text)  # Matches words or punctuation
-    for s in words:
-        context = context[1:] + [stoi[s]]  
-    generated_word = seed_text
+    input_indices = [stoi.get(word, 0) for word in seed_text.split()]
+    context = [0] * max(0, block_size - len(input_indices)) + input_indices[-block_size:]
+    generated_text = seed_text.strip() + ' '
     for i in range(max_len):
         x = torch.tensor(context).view(1, -1).to(device)
         y_pred = model(x)
