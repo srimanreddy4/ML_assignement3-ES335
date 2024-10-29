@@ -124,6 +124,7 @@ def generate_word(model, itos, stoi, block_size,seed_text=None, max_len=10):
         word = itos[ix]
         generated_text += word + ' '
         context = context[1:] + [ix]
+    generated_text = generated_text.replace(' .', '.')    
     return generated_text.strip()
 
 emb_dim = st.selectbox("Select the Embedding Dimension", [64,128])
