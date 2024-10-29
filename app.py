@@ -122,9 +122,9 @@ def generate_word(model, itos, stoi, block_size,seed_text=None, max_len=10):
         y_pred = model(x)
         ix = torch.distributions.categorical.Categorical(logits=y_pred).sample().item()
         word = itos[ix]
-        generated_word += word + ' '
+        generated_text += word + ' '
         context = context[1:] + [ix]
-    return generated_word.strip()
+    return generated_text.strip()
 
 emb_dim = st.selectbox("Select the Embedding Dimension", [64,128])
 activation_funct = st.selectbox(" Select the activation function", ["tanh","relu"])
